@@ -82,7 +82,7 @@ export default class ReactFastClick extends Component {
    */
   handleTouchStart = e => {
     // one+ touches means the user isn't trying to tap this element
-    if (e.touches.length !== 1 || e.targetTouches.length !== 1) {
+    if (e.touches.length !== 1 || e.targetTouches.length !== 1 || e.target.isContentEditable) {
       this.clearTouchData();
       return;
     }
