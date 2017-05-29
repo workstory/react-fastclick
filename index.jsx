@@ -33,6 +33,17 @@ const isFocusedTextArea = (el) => {
   return isFocused(el) && isTextArea(el);
 };
 
+const isMultiTouch = (e) => {
+  return e.touches.length !== 1 || e.targetTouches.length !== 1
+};
+
+const requiresNativeEvents = (el) => {
+  return (isInput(el) && !isCheckbox(el)) ||
+    isTextArea(el) ||
+    el.isContentEditable ||
+    el.type === 'submit';
+};
+
 export default class ReactFastClick extends Component {
   static propTypes = {
     // The number of px that the finger may move before the gesture is no longer considered a tap
@@ -82,7 +93,7 @@ export default class ReactFastClick extends Component {
    */
   handleTouchStart = e => {
     // one+ touches means the user isn't trying to tap this element
-    if (e.touches.length !== 1 || e.targetTouches.length !== 1 || e.target.isContentEditable) {
+    if (isMultiTouch(e) || requiresNativeEvents(e.target)) {
       this.clearTouchData();
       return;
     }
