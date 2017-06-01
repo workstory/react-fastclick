@@ -41,8 +41,7 @@ const requiresNativeEvents = (el) => {
   return (isInput(el) && !isCheckbox(el)) ||
     isSelect(el) ||
     isTextArea(el) ||
-    el.isContentEditable ||
-    el.type === 'submit';
+    el.isContentEditable;
 };
 
 export default class ReactFastClick extends Component {
