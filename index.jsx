@@ -200,6 +200,12 @@ export default class ReactFastClick extends Component {
       return;
     }
 
+    // trigger a blur manually on the active element if tapping outside. this is needed to simulate
+    // similar behaviour as on desktop browsers (which is mousedown -> blur -> mouseup -> click).
+    if (document.activeElement && document.activeElement !== targetEl) {
+      document.activeElement.blur();
+    }
+
     // prevent the simulated mouse events
     e.preventDefault();
     // we don't need this touch end event to be handled multiple times if it's interpreted as a click
